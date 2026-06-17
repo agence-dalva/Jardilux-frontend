@@ -1,0 +1,207 @@
+﻿@import "tailwindcss";
+
+@theme {
+  /* Palette Jardilux */
+  --color-vert-foret: #9E7020;
+  --color-vert-sauge: #DCA54A;
+  --color-vert-clair: #E8C870;
+  --color-or: #c4992e;
+  --color-or-clair: #e8c86a;
+  --color-creme: #faf7f2;
+  --color-creme-fonce: #f0ead8;
+  --color-brun-clair: #d4c4a0;
+  --color-sombre: #1a1a1a;
+  --color-texte: #2d2d2d;
+  --color-texte-doux: #5a5a5a;
+  --color-bordure: #e0d8c8;
+
+  /* Typographies */
+  --font-playfair: var(--font-garamond), 'EB Garamond', Georgia, serif;
+  --font-inter: var(--font-plex-sans), 'IBM Plex Sans', system-ui, sans-serif;
+  --font-cormorant: var(--font-garamond), 'EB Garamond', Georgia, serif;
+
+  /* Animations */
+  --animate-fade-up: fade-up 0.6s ease-out forwards;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-slide-left: slide-left 0.5s ease-out forwards;
+  --animate-slide-right: slide-right 0.5s ease-out forwards;
+
+  /* Ombres */
+  --shadow-card: 0 4px 24px -4px rgba(45, 80, 22, 0.12);
+  --shadow-card-hover: 0 12px 40px -4px rgba(45, 80, 22, 0.22);
+  --shadow-or: 0 4px 24px -4px rgba(196, 153, 46, 0.3);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes border-beam {
+  100% { offset-distance: 100%; }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+:root {
+  --background: #faf7f2;
+  --foreground: #1a1a1a;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plex-sans), 'IBM Plex Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #faf7f2;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8C870;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9E7020;
+}
+
+/* Sélection de texte */
+::selection {
+  background: #c4992e;
+  color: #faf7f2;
+}
+
+/* Classes utilitaires Jardilux */
+.font-playfair { font-family: var(--font-garamond), 'EB Garamond', Georgia, serif; }
+.font-cormorant { font-family: var(--font-garamond), 'EB Garamond', Georgia, serif; }
+
+.gradient-vert {
+  background: linear-gradient(135deg, #9E7020 0%, #DCA54A 50%, #E8C870 100%);
+}
+
+.gradient-text-or {
+  background: linear-gradient(135deg, #c4992e, #e8c86a, #c4992e);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-vert {
+  background: linear-gradient(135deg, #9E7020, #DCA54A, #E8C870);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #c4992e 0%, #e8c86a 40%, #c4992e 60%, #e8c86a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Overlay hero — ton sombre neutre chaud, sans aucune teinte verte */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 6, 4, 0.40) 0%,
+    rgba(8, 6, 4, 0.18) 32%,
+    rgba(8, 6, 4, 0.62) 72%,
+    rgba(6, 4, 2, 0.90) 100%
+  );
+}
+
+/* Vignette radiale cinématique (assombrit les bords) */
+.hero-vignette {
+  background: radial-gradient(
+    115% 115% at 50% 28%,
+    transparent 38%,
+    rgba(0, 0, 0, 0.32) 75%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* Cards avec glassmorphism */
+.glass-card {
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(224, 216, 200, 0.6);
+}
+
+/* Bouton avec effet shimmer */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+.btn-shimmer:hover::after {
+  left: 100%;
+}
+
+/* Trait décoratif */
+.decorative-line::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #c4992e, #e8c86a);
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
