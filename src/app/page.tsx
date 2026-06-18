@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Hero from "@/components/home/Hero";
 import AboutSection from "@/components/home/AboutSection";
 import ValuesShowcase from "@/components/home/ValuesShowcase";

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from "next/link";
 import { getProduit, getProduits, getStrapiImageUrl, getMockImageUrl } from "@/lib/api";
 import ProductDetailView from "@/components/shop/ProductDetailView";

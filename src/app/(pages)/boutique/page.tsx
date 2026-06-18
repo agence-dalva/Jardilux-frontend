@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import BoutiqueView from "@/components/shop/BoutiqueView";
 import { getProduits, getCategories } from "@/lib/api";
 

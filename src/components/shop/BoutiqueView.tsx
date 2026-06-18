@@ -176,7 +176,7 @@ export default function BoutiqueView({ produits, categories }: BoutiqueViewProps
             <p className="font-playfair text-2xl text-[#8a8078] mb-3">Aucun produit trouvé</p>
             <p className="text-[#8a8078] text-sm mb-8">Essayez de modifier vos critères de recherche.</p>
             <button
-              onClick={() => { setSearch(""); setSelectedCat(null); setOnlyVedette(false); setOnlyEnStock(false); }}
+              onClick={() => { setSelectedCat(null); setOnlyVedette(false); setOnlyEnStock(false); }}
               className="px-6 py-3 bg-[#DCA54A] text-white text-sm font-semibold uppercase tracking-wider hover:bg-[#c4992e] transition-colors cursor-pointer"
             >
               Réinitialiser les filtres
