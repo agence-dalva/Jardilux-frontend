@@ -67,11 +67,12 @@ export default function Navbar() {
                 alt="Jardilux"
                 width={140}
                 height={48}
+                style={{ width: "auto" }}
                 className={cn(
                   "object-contain transition-all duration-500",
                   solid
-                    ? "h-9 w-auto brightness-0"          // fond blanc → logo noir
-                    : "h-10 w-auto brightness-0 invert"  // fond sombre → logo blanc
+                    ? "h-9 brightness-0"
+                    : "h-10 brightness-0 invert"
                 )}
                 priority
               />

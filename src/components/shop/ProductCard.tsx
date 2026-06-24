@@ -10,6 +10,10 @@ interface ProductCardProps {
   className?: string;
 }
 
+function isDark(url: string | null): boolean {
+  return !!url && /[-_]dark\b/i.test(url);
+}
+
 export default function ProductCard({ produit, className }: ProductCardProps) {
   const img1 = produit.images?.[0]
     ? getStrapiImageUrl(produit.images[0])
@@ -18,10 +22,12 @@ export default function ProductCard({ produit, className }: ProductCardProps) {
     ? getStrapiImageUrl(produit.images[1])
     : null;
 
+  const dark = isDark(img1) || isDark(img2);
+
   return (
     <Link
       href={`/boutique/${produit.slug}`}
-      className={cn("group block relative overflow-hidden aspect-[3/4] bg-[#1a1812]", className)}
+      className={cn("group block relative overflow-hidden aspect-[3/4] bg-white", className)}
     >
       {/* Image principale */}
       {img1 && (
@@ -29,7 +35,7 @@ export default function ProductCard({ produit, className }: ProductCardProps) {
           src={img1}
           alt={produit.nom}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-700",
+            "absolute inset-0 w-full h-full object-contain transition-opacity duration-700",
             img2 ? "group-hover:opacity-0" : ""
           )}
         />
@@ -40,7 +46,9 @@ export default function ProductCard({ produit, className }: ProductCardProps) {
         <img
           src={img2}
           alt={produit.nom}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          className={cn(
+            "absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          )}
         />
       )}
 

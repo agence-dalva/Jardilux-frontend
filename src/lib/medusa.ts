@@ -50,6 +50,11 @@ export interface MedusaProduct {
   tags?: MedusaTag[];
   variants?: MedusaVariant[];
   product_details?: MedusaProductDetails | MedusaProductDetails[] | null;
+  weight?: number | null;
+  length?: number | null;
+  height?: number | null;
+  width?: number | null;
+  material?: string | null;
 }
 
 async function medusaFetch<T>(
@@ -87,6 +92,7 @@ async function getDefaultRegionId(): Promise<string | undefined> {
 
 const PRODUCT_FIELDS =
   "id,title,handle,subtitle,description,thumbnail,metadata," +
+  "weight,length,height,width,material," +
   "*images,*categories,*tags,*variants.calculated_price," +
   "+product_details.nettoyage,+product_details.details_technique";
 
@@ -141,7 +147,7 @@ export async function listMedusaCategories(): Promise<MedusaCategory[]> {
   }>(
     "/product-categories",
     { fields: "id,name,handle,description,rank,metadata", limit: 100 },
-    { cache: "no-store" }
+    { next: { revalidate: 0 } }
   );
   return product_categories ?? [];
 }

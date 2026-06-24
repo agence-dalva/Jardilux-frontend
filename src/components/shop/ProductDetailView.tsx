@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
@@ -15,12 +15,22 @@ function AccordionItem({
   title,
   children,
   defaultOpen = false,
+  controlOpen,
+  onToggle,
 }: {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  controlOpen?: boolean;
+  onToggle?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const open = controlOpen !== undefined ? controlOpen : internalOpen;
+  const setOpen = (v: boolean | ((prev: boolean) => boolean)) => {
+    const next = typeof v === "function" ? v(open) : v;
+    setInternalOpen(next);
+    onToggle?.(next);
+  };
   return (
     <div className="border-b border-[#e8dcc8]">
       <button
@@ -77,14 +87,25 @@ export default function ProductDetailView({
   related: Produit[];
 }) {
   const [activeImage, setActiveImage] = useState(0);
+  const [descOpen, setDescOpen] = useState(false);
+
+  const isDark = images.some((url) => /[-_]dark\b/i.test(url));
+  const descAccordionRef = useRef<HTMLDivElement>(null);
 
   const prev = () => setActiveImage((i) => (i - 1 + images.length) % images.length);
   const next = () => setActiveImage((i) => (i + 1) % images.length);
 
+  function scrollToDescription() {
+    setDescOpen(true);
+    setTimeout(() => {
+      descAccordionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
   /* Formate un texte brut en paragraphes (split sur les sauts de ligne) */
   function paragraphs(text: string) {
-    return text.split(/\n\n+/).map((p, i) => (
-      <p key={i} className={i > 0 ? "mt-4" : ""}>{p.trim()}</p>
+    return text.split(/\n+/).map((p, i) => (
+      <p key={i} className={i > 0 ? "mt-3" : ""}>{p.trim()}</p>
     ));
   }
 
@@ -99,7 +120,23 @@ export default function ProductDetailView({
       ? { title: "Description", node: paragraphs(produit.description) }
       : null,
     produit.dimensions
-      ? { title: "Dimensions", node: produit.dimensions }
+      ? {
+          title: "Dimensions",
+          node: (
+            <div className="space-y-1.5">
+              {produit.dimensions.split("\n").map((line, i) => {
+                const [label, ...rest] = line.split(":");
+                const value = rest.join(":").trim();
+                return (
+                  <div key={i} className="flex items-baseline gap-1.5">
+                    <span className="font-semibold text-[#1a1a1a] w-24 shrink-0">{label.trim()} :</span>
+                    <span>{value}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ),
+        }
       : null,
     produit.materiaux
       ? { title: "Matériaux", node: produit.materiaux }
@@ -162,7 +199,7 @@ export default function ProductDetailView({
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   src={images[activeImage]}
                   alt={produit.nom}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </AnimatePresence>
 
@@ -222,7 +259,7 @@ export default function ProductDetailView({
                         : "border-transparent opacity-50 hover:opacity-90"
                     )}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>
@@ -253,12 +290,30 @@ export default function ProductDetailView({
               {produit.nom}
             </h1>
 
-            {/* Description courte */}
-            {produit.descriptionCourte && (
-              <p className="text-[#5a5a5a] leading-relaxed mb-8 text-base">
-                {produit.descriptionCourte}
-              </p>
+            {/* Prix */}
+            {produit.prix > 0 && (
+              <div className="mb-4">
+                <span className="font-playfair text-3xl text-[#1a1a1a] font-semibold">
+                  {formatPrice(produit.prix)}
+                </span>
+              </div>
             )}
+
+            {/* Description avec "Voir plus" */}
+            {produit.description && (
+              <div className="mb-6">
+                <p className="text-[#5a5a5a] leading-relaxed text-base line-clamp-3">
+                  {produit.description}
+                </p>
+                <button
+                  onClick={scrollToDescription}
+                  className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#DCA54A] hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  Voir plus →
+                </button>
+              </div>
+            )}
+
 
             {/* Disponibilité */}
             <div className="flex items-center gap-2.5 mb-10">
@@ -270,7 +325,7 @@ export default function ProductDetailView({
               />
               <span className="text-sm text-[#2d2d2d]">
                 {produit.enStock
-                  ? "En stock — expédition sous 48h"
+                  ? "En stock"
                   : "Sur commande — délai 2 à 4 semaines"}
               </span>
             </div>
@@ -295,11 +350,21 @@ export default function ProductDetailView({
           <div className="max-w-[1280px] mx-auto px-6 py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24">
               <div className="border-t border-[#e8dcc8]">
-                {allSections.map((s, i) => (
-                  <AccordionItem key={s.title} title={s.title} defaultOpen={i === 0}>
-                    {s.node}
-                  </AccordionItem>
-                ))}
+                {allSections.map((s, i) => {
+                  const isDesc = s.title === "Description";
+                  return (
+                    <div key={s.title} ref={isDesc ? descAccordionRef : undefined}>
+                      <AccordionItem
+                        title={s.title}
+                        defaultOpen={i === 0}
+                        controlOpen={isDesc ? descOpen : undefined}
+                        onToggle={isDesc ? setDescOpen : undefined}
+                      >
+                        {s.node}
+                      </AccordionItem>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Bloc garanties Jardilux */}

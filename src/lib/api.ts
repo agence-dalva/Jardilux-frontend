@@ -46,6 +46,15 @@ function truncate(text: string, max = 110): string {
   return text.slice(0, max).replace(/\s+\S*$/, "") + "…";
 }
 
+function buildDimensions(mp: MedusaProduct): string | undefined {
+  const parts: string[] = [];
+  if (mp.height) parts.push(`Hauteur : ${mp.height} cm`);
+  if (mp.width) parts.push(`Largeur : ${mp.width} cm`);
+  if (mp.length) parts.push(`Longueur : ${mp.length} cm`);
+  if (mp.weight) parts.push(`Poids : ${mp.weight} kg`);
+  return parts.length ? parts.join("\n") : undefined;
+}
+
 function mapCategorie(c: MedusaCategory): Categorie {
   return {
     id: hashId(c.id),
@@ -101,8 +110,8 @@ function mapProduit(mp: MedusaProduct): Produit {
       (mp.tags ?? []).some((t) => t.value?.toLowerCase() === "vedette"),
     enStock: !metaIsTrue(meta, "sur_commande", "surCommande") &&
       metaString(meta, "en_stock", "enStock") !== "false",
-    dimensions: metaString(meta, "dimensions"),
-    materiaux: metaString(meta, "materiaux", "matériaux", "materials"),
+    dimensions: metaString(meta, "dimensions") ?? buildDimensions(mp),
+    materiaux: metaString(meta, "materiaux", "matériaux", "materials") ?? (mp.material?.trim() || undefined),
     couleurs: metaString(meta, "couleurs", "colors", "coloris"),
     tags: (mp.tags ?? []).map((t) => t.value),
     nettoyage: details?.nettoyage ?? null,
