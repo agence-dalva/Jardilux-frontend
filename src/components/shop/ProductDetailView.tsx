@@ -316,19 +316,12 @@ export default function ProductDetailView({
 
 
             {/* Disponibilité */}
-            <div className="flex items-center gap-2.5 mb-10">
-              <span
-                className={cn(
-                  "w-2 h-2 rounded-full flex-shrink-0",
-                  produit.enStock ? "bg-[#DCA54A]" : "bg-[#8a8078]"
-                )}
-              />
-              <span className="text-sm text-[#2d2d2d]">
-                {produit.enStock
-                  ? "En stock"
-                  : "Sur commande — délai 2 à 4 semaines"}
-              </span>
-            </div>
+            {!produit.enStock && (
+              <div className="flex items-center gap-2.5 mb-10">
+                <span className="w-2 h-2 rounded-full flex-shrink-0 bg-[#8a8078]" />
+                <span className="text-sm text-[#2d2d2d]">Sur commande — délai 2 à 4 semaines</span>
+              </div>
+            )}
 
             {/* CTA */}
             <div className="mb-5">
@@ -376,7 +369,6 @@ export default function ProductDetailView({
                 <div className="space-y-5">
                   {[
                     ["Qualité sélectionnée", "Chaque produit est rigoureusement choisi pour sa durabilité et son design."],
-                    ["Livraison soignée", "Expédition protégée et livraison offerte dès 500 € d'achat."],
                     ["Service personnalisé", "Notre équipe vous accompagne de la sélection à l'installation."],
                     ["Garantie constructeur", "Tous nos produits sont couverts par la garantie fabricant."],
                   ].map(([titre, desc]) => (
