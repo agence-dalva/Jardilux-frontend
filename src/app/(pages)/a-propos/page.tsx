@@ -96,12 +96,12 @@ export default function AProposPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-white border border-[#e8dcc8] p-5 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <Heart size={18} className="text-[#DCA54A] flex-shrink-0" />
+              <div className="absolute -bottom-4 -left-4 bg-white border border-[#e8dcc8] p-6 shadow-sm">
+                <div className="flex items-center gap-4">
+                  <Heart size={22} className="text-[#DCA54A] flex-shrink-0" />
                   <div>
-                    <p className="font-playfair font-bold text-[#1a1a1a] text-sm">Fait avec passion</p>
-                    <p className="text-xs text-[#8a8078]">Depuis 2025 en France</p>
+                    <p className="font-playfair font-bold text-[#1a1a1a] text-base">Fait avec passion</p>
+                    <p className="text-sm text-[#8a8078]">Depuis 2025 en France</p>
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@ export default function AProposPage() {
             <div className="absolute left-[23px] top-0 bottom-0 w-px bg-[#e8dcc8]" />
             {milestones.map((m, i) => (
               <motion.div
-                key={m.year}
+                key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}

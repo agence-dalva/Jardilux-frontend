@@ -39,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let productPages: MetadataRoute.Sitemap = [];
   try {
-    const { produits } = await getProduits({ limit: 500 });
+    const produits = await getProduits({ limit: 500 });
     productPages = produits.map((p) => ({
       url: `${BASE_URL}/boutique/${p.slug}`,
       lastModified: new Date(),

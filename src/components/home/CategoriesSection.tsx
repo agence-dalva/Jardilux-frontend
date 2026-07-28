@@ -108,7 +108,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
               {/* Contenu */}
               <div className="absolute inset-x-0 bottom-0 p-4 lg:p-6 flex flex-col items-start gap-1">
                 {/* Numéro — desktop uniquement */}
-                <span className="hidden lg:block font-playfair text-3xl font-bold text-white/15 select-none leading-none">
+                <span className="hidden lg:block font-playfair text-5xl font-bold text-white/15 select-none leading-none">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
@@ -116,7 +116,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                 <motion.h3
                   animate={{ color: isHovered ? "#e8c86a" : "#ffffff" }}
                   transition={{ duration: 0.3 }}
-                  className="font-playfair font-bold leading-tight text-base lg:text-sm"
+                  className="font-playfair font-bold leading-tight text-lg lg:text-base"
                 >
                   {cat.name}
                 </motion.h3>
