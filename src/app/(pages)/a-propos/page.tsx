@@ -7,12 +7,10 @@ import GoldDivider from "@/components/ui/GoldDivider";
 import LuxuryButton from "@/components/ui/LuxuryButton";
 
 const milestones = [
-  { year: "2019", event: "Fondation de Jardilux à Plancher-Bas (Haute-Saône)" },
-  { year: "2020", event: "Ouverture de notre showroom et lancement du site e-commerce" },
-  { year: "2021", event: "Participation au Salon de l'Habitat — 1ère édition" },
-  { year: "2022", event: "Lancement de notre gamme premium de mobilier teck" },
-  { year: "2023", event: "Plus de 300 clients satisfaits en France et en Europe" },
-  { year: "2024", event: "Nouvelle collection Pergolas & Abris bioclimatiques" },
+  { year: "2025", event: "Fondation de Jardilux à Plancher-Bas (Haute-Saône)" },
+  { year: "2025", event: "Ouverture de notre showroom et lancement du site e-commerce" },
+  { year: "2025", event: "Participation au Salon de l'Habitat — 1ère édition" },
+  { year: "2026", event: "Lancement de notre gamme premium de mobilier teck" },
 ];
 
 export default function AProposPage() {
@@ -103,7 +101,7 @@ export default function AProposPage() {
                   <Heart size={18} className="text-[#DCA54A] flex-shrink-0" />
                   <div>
                     <p className="font-playfair font-bold text-[#1a1a1a] text-sm">Fait avec passion</p>
-                    <p className="text-xs text-[#8a8078]">Depuis 2019 en France</p>
+                    <p className="text-xs text-[#8a8078]">Depuis 2025 en France</p>
                   </div>
                 </div>
               </div>
@@ -155,7 +153,7 @@ export default function AProposPage() {
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#DCA54A] mb-4 inline-block">
-              Depuis 2019
+              Depuis 2025
             </span>
             <GoldDivider className="mb-5" />
             <h2 className="font-playfair text-3xl md:text-4xl font-bold text-[#1a1a1a]">

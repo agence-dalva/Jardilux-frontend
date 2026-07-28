@@ -75,6 +75,7 @@ export default function Navbar() {
                     : "h-10 brightness-0 invert"
                 )}
                 priority
+                loading="eager"
               />
             </Link>
 

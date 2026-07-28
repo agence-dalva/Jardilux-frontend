@@ -33,6 +33,7 @@ export default function Footer() {
               alt="Jardilux"
               width={130}
               height={44}
+              style={{ width: "auto" }}
               className="object-contain"
             />
           </div>
