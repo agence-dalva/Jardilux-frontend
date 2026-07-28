@@ -62,11 +62,18 @@ export default function ProductCard({ produit, className }: ProductCardProps) {
         </span>
       )}
 
-      {/* Titre */}
+      {/* Titre + prix */}
       <div className="absolute bottom-0 inset-x-0 p-5">
-        <h3 className="font-playfair text-white font-semibold text-base leading-snug group-hover:text-[#e8c86a] transition-colors duration-300">
-          {produit.nom}
-        </h3>
+        <div className="flex items-end justify-between gap-2">
+          <h3 className="font-playfair text-white font-semibold text-base leading-snug group-hover:text-[#e8c86a] transition-colors duration-300">
+            {produit.nom}
+          </h3>
+          {produit.prix > 0 && (
+            <span className="text-[#e8c86a] font-semibold text-sm whitespace-nowrap">
+              {produit.prix.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })}
+            </span>
+          )}
+        </div>
         {img2 && (
           <p className="mt-1 text-white/40 text-xs tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             Voir l'autre vue →
